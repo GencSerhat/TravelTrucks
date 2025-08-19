@@ -6,13 +6,6 @@ function Home() {
     <>
       <Navbar />
       <section className={styles.HomeBanner}>
-        {/* <div>
-          <img
-            src="../../../public/HomeBanner.png"
-            alt="HomeBanner"
-            className={styles.HomeBannerImage}
-          />
-        </div> */}
         <div className={styles.HomeTextContainer}>
           <h1 className={styles.HomeTextH1}>Campers of your dreams</h1>
           <h2 className={styles.HomeTextH2}>

@@ -13,7 +13,7 @@ function Navbar() {
         <div className={styles.NavbarCenter}>
           <ul className={styles.NavbarList}>
             <li>
-              <a href="#/">Home</a>
+              <a href="/">Home</a>
             </li>
             <li>
               <a href="/catalog">Catalog</a>
