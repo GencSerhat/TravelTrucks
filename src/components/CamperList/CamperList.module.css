@@ -1,0 +1,11 @@
+.CamperList {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .CamperList {
+    grid-template-columns: 1fr 1fr; /* 2 sütun */
+  }
+}

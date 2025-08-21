@@ -2,21 +2,28 @@ import styles from "./CamperCard.module.css";
 const formatPrice = (value) => `€${Number(value).toFixed(2)}`;
 function CamperCard({ camper }) {
   const {
-    id,
+  id,
     name = "Unknown",
     price = 0,
-    image,
     location = "-",
     rating,
     reviews,
+    image,
     features = [],
+    description,
   } = camper || {};
+  
   return (
     <>
       <article className={styles.CamperCard}>
         {/* sol taraf görsel */}
         <figure className={styles.ImageWrap}>
-          <img src={image || "/Pic.png"} alt={name} loading="lazy" />
+          <img
+            src={image || "/Pic.png"}
+            alt={name}
+            loading="lazy"
+            onError={(e) => (e.target.src = "/Pic.png")}
+          />
         </figure>
         {/* sağ taraf detaylar */}
         <div className={styles.CamperCardDetails}>
