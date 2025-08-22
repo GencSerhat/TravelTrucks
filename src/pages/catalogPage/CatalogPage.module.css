@@ -1,0 +1,16 @@
+.CatalogPage{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.LoadMoreBtn{
+    background-color: red;
+    margin-top: 10px;
+    align-items: center;
+}
+.RightSide{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
