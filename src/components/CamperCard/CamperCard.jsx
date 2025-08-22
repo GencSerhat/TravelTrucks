@@ -1,8 +1,12 @@
+import { useState } from "react";
 import styles from "./CamperCard.module.css";
+
 const formatPrice = (value) => `€${Number(value).toFixed(2)}`;
 function CamperCard({ camper }) {
+  const [showAllFilters, setShowAllFilters] = useState(false);
+
   const {
-  id,
+    id,
     name = "Unknown",
     price = 0,
     location = "-",
@@ -12,7 +16,11 @@ function CamperCard({ camper }) {
     features = [],
     description,
   } = camper || {};
-  
+
+
+  const handleToggleFilters = () => {
+    setShowAllFilters(!showAllFilters);
+  };
   return (
     <>
       <article className={styles.CamperCard}>
@@ -57,8 +65,15 @@ function CamperCard({ camper }) {
           <div className={styles.CardFeatures}>
             {features.length > 0 && (
               <ul className={styles.Features}>
-                {features.map((f) => (
-                  <li key={f}>{f}</li>
+                {(showAllFilters ? features : features.slice(0, 4)).map((f, label) => (
+                  <li key={f} className={styles.FeaturesList} >
+                     <img
+                                          src={`/icons/${f.toLowerCase()}.png`}
+                                          alt={`${label}`}
+                                          className={styles.icon}
+                                        />
+                    {f}
+                  </li>
                 ))}
               </ul>
             )}

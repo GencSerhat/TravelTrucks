@@ -15,11 +15,15 @@ const VEHICLE_TYPES = [
   { key: "alcove", label: "Alcove" },
 ];
 
-
-function LeftSidebar({onApply}) {
+function LeftSidebar({ onApply }) {
   const [location, setLocation] = useState("");
   const [selectedEquip, setSelectedEquip] = useState(new Set()); // Çoklu seçim
   const [vehicleType, setVehicleType] = useState(""); // tek seçim
+
+
+const handleToogleFilters=() => {
+  setShowAllFilters(!showAllFilters);
+};
 
   const toggleEquip = (key) => {
     setSelectedEquip((prev) => {
@@ -30,26 +34,23 @@ function LeftSidebar({onApply}) {
   };
   const handleApply = () => {
     const params = {
-        location:location||undefined,
-        form:vehicleType||undefined,
-        //ekipmanlar
-        AC:selectedEquip.has("AC")||undefined,
-        kitchen:selectedEquip.has("kitchen")||undefined,
-        bathroom:selectedEquip.has("bathroom")||undefined,
-        TV:selectedEquip.has("TV")||undefined,
-        //Automatic 
-        transmission: selectedEquip.has("automatic") ?  "automatic" : undefined,
+      location: location || undefined,
+      form: vehicleType || undefined,
+      //ekipmanlar
+      AC: selectedEquip.has("AC") || undefined,
+      kitchen: selectedEquip.has("kitchen") || undefined,
+      bathroom: selectedEquip.has("bathroom") || undefined,
+      TV: selectedEquip.has("TV") || undefined,
+      //Automatic
+      transmission: selectedEquip.has("automatic") ? "automatic" : undefined,
     };
     onApply?.(params);
-
-  };
-  const handleReset = () => {
-    setLocation("");
-    setSelectedEquip(new Set());
-    setVehicleType("");
-    onApply?.({}); // filtrleeri temizletip çağırmak
   };
 
+  // Vehicle type seçimini değiştiren fonksiyon
+  const handleVehicleTypeSelect = (key) => {
+    setVehicleType(key); // Seçilen vehicleType'ı güncelleme
+  };
   return (
     <>
       <aside className={styles.LeftSidebar}>
@@ -57,36 +58,55 @@ function LeftSidebar({onApply}) {
           <label className={styles.LocationLabel} htmlFor="location">
             Location
           </label>
-          <input
-            id="location"
-            type="text"
-            className={styles.LocationInput}
-            placeholder="Kyiv, Ukraine"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
+          <div className={styles.logoAndInput}>
+            <img
+              src="/LocationVector.png"
+              className={styles.LogoInput}
+              alt="Logo"
+            ></img>
+            <input
+              id="location"
+              type="text"
+              className={styles.LocationInput}
+              placeholder="Kyiv, Ukraine"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            />
+          </div>
         </div>
         <div className={styles.Filters}>
-          <label htmlFor="">Filters</label>
+          <label htmlFor="filters" className={styles.LabelFilters}>
+            Filters
+          </label>
+          <hr className={styles.hr} />
           <h3>Vehicle equipment</h3>
-          <div className={styles.EquipmentList}>
-            {EQUIPMENT.map(({ key, label }) => {
-              const active = selectedEquip.has(key);
-              return (
-                <button
-                  key={key}
-                  type="button"
-                  className={styles.chip}
-                  data-active={active}
-                  aria-pressed={active}
-                  onClick={() => toggleEquip(key)}
-                >
-                  {/* burada ikon koyabilirsin */}
-                  <span>{label}</span>
-                </button>
-              );
-            })}
-            <h2>Vehicle type</h2>
+          <div className={styles.EquipmentAndTypeList}>
+            <div className={styles.EquipmentList}>
+              {EQUIPMENT.map(({ key, label }) => {
+                const active = selectedEquip.has(key);
+                return (
+                  <button
+                    key={key}
+                    type="button"
+                    className={`${styles.chip} ${
+                      active ? styles.selected : ""
+                    }`}
+                    data-active={active}
+                    aria-pressed={active}
+                    onClick={() => toggleEquip(key)}
+                  >
+                    <img
+                      src={`/icons/${key.toLowerCase()}.png`}
+                      alt={`${label}`}
+                      className={styles.icon}
+                    />
+                    <span>{label}</span>
+                  </button>
+                );
+              })}
+            </div>
+            <hr className={styles.hr} />
+            <h3>Vehicle type</h3>
             <div className={styles.TypeList}>
               {VEHICLE_TYPES.map(({ key, label }) => {
                 const active = vehicleType === key;
@@ -94,19 +114,27 @@ function LeftSidebar({onApply}) {
                   <button
                     key={key}
                     type="button"
-                    className={styles.chip}
+                    className={`${styles.chip} ${
+                      active ? styles.selected : ""
+                    }`}
                     data-active={active}
                     aria-pressed={active}
-                    onClick={() => setVehicleType(key)}
+                    onClick={() => handleVehicleTypeSelect(key)}
                   >
-                    {/* burada ikon koyabilirsin */}
+                    <img
+                      src={`/icons/${key.toLowerCase()}.png`}
+                      alt={`${label}`}
+                      className={styles.icon}
+                    />
                     <span>{label}</span>
                   </button>
                 );
               })}
             </div>
             <div className={styles.Search}>
-              <button className={styles.SearchBtn} onClick={handleApply}>Search</button>
+              <button className={styles.SearchBtn} onClick={handleApply}>
+                Search
+              </button>
             </div>
           </div>
         </div>

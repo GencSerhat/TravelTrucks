@@ -1,4 +1,116 @@
-.Location{
-    display:flex;
-    flex-direction: column;
+.LeftSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 25%;
+}
+.Location {
+  display: flex;
+  flex-direction: column;
+}
+.LocationLabel {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #6c717b;
+}
+.logoAndInput {
+  position: relative;
+  display: inline-block;
+}
+.LocationInput {
+  font-family: "Inter", sans-serif;
+  width: 360px;
+  height: 56px;
+  border-radius: 12px;
+  color: #f7f7f7;
+  padding: 40px;
+  height: 40px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+.LogoInput {
+  position: absolute;
+  left: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  color: #101828;
+}
+.LabelFilters {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #475467;
+}
+.Filters h3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #101828;
+}
+.EquipmentAndTypeList {
+  width: 360px;
+  height: 200px;
+  gap: 10px;
+}
+
+.EquipmentList {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.chip {
+  width: 112px;
+  height: 96px;
+  border: 1px;
+  gap: 8px;
+  cursor: pointer;
+  border-color: #e44848;
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5%;
+  text-align: center;
+  color: #101828;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 12px;
+
+  justify-content: center;
+  
+  &.selected{
+    border: 1px solid red;
+  }
+}
+.TypeList {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.Search {
+  margin-top: 30px;
+}
+.SearchBtn {
+  font-family: "Inter", sans-serif;
+  width: 166px;
+  height: 56px;
+  border-radius: 200px;
+  background-color: #e44848;
+  color: #ffffff;
+}
+.hr{
+    width: 360px;
+    border: 1px;
+    color: #dadde1;
+    border-style: solid;
+    margin-top: 30px;
 }
