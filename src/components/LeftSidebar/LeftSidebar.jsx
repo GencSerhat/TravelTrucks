@@ -10,16 +10,13 @@ const EQUIPMENT = [
 ];
 
 const VEHICLE_TYPES = [
-  { key: "van", label: "van" },
+  { key: "panelTruck", label: "van" },
   { key: "integrated", label: "Fully Integrated" },
   { key: "alcove", label: "Alcove" },
 ];
-/**
- * onApply(filters) üst bileşenden verilecek.
- * Örn CatalogPage: <LeftSidebar onApply={(f)=> dispatch(fetchCampers({...f, page:1, limit:4}))} />
- */
 
-function LeftSidebar() {
+
+function LeftSidebar({onApply}) {
   const [location, setLocation] = useState("");
   const [selectedEquip, setSelectedEquip] = useState(new Set()); // Çoklu seçim
   const [vehicleType, setVehicleType] = useState(""); // tek seçim
@@ -45,22 +42,6 @@ function LeftSidebar() {
     };
     onApply?.(params);
 
-
-
-    
-
-    //seçilen ekipmanları objeye çevirdim
-    const equipmentFlags = {};
-
-    EQUIPMENT.forEach(({ key }) => {
-      equipmentFlags[key] = selectedEquip.has(key) ? true : undefined;
-    });
-    const filters = {
-      location: location || undefined,
-      type: vehicleType || undefined,
-      ...equipmentFlags,
-    };
-    onApply?.(filters); //üst bileşene verecek
   };
   const handleReset = () => {
     setLocation("");
@@ -125,7 +106,7 @@ function LeftSidebar() {
               })}
             </div>
             <div className={styles.Search}>
-              <button className={styles.SearchBtn}>Search</button>
+              <button className={styles.SearchBtn} onClick={handleApply}>Search</button>
             </div>
           </div>
         </div>

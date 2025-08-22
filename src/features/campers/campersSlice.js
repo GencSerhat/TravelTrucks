@@ -44,7 +44,7 @@ const camperSlice = createSlice({
         state.isLoading = false;
         // 1) Argümanlardan son filtreleri çıkart (page/limit/append hariç)
         const allArgs = action.meta?.arg || {};
-        const { append = false, page = 1, limit, ...onlyFilters } = allArgs;
+        const { append = false, page = 1, limit=4, ...onlyFilters } = allArgs;
         if (!append) state.lastQuery = onlyFilters; // yeni aramada güncelle
 
         // 2) API yanıtından items'ı al ve normalize et
