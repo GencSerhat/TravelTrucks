@@ -31,6 +31,7 @@ const camperSlice = createSlice({
       state.page = 1;
       state.hasMore = true;
       state.error = null;
+      state.lastQuery = {};
     },
   },
   extraReducers: (builder) => {
@@ -41,15 +42,21 @@ const camperSlice = createSlice({
       })
       .addCase(fetchCampers.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { items: newItems = [] } = action.payload.data || {};
-        const append = action.payload.append;
-        const normalized = newItems.map((c) => ({
+        // 1) Argümanlardan son filtreleri çıkart (page/limit/append hariç)
+        const allArgs = action.meta?.arg || {};
+        const { append = false, page = 1, limit, ...onlyFilters } = allArgs;
+        if (!append) state.lastQuery = onlyFilters; // yeni aramada güncelle
+
+        // 2) API yanıtından items'ı al ve normalize et
+        const { items: rawItems = [] } = action.payload.data || {};
+
+        const normalized = rawItems.map((c) => ({
           id: c.id,
           name: c.name,
           location: c.location,
           price: c.price,
           rating: c.rating,
-          reviews: c.reviews?.length ?? 0,
+          reviews: Array.isArray(c.reviews) ? c.reviews.length : 0,
           image: c.gallery?.[0]?.original || "/Pic.png",
           features: [
             c.transmission,
@@ -67,9 +74,9 @@ const camperSlice = createSlice({
         }));
         state.items = append ? [...state.items, ...normalized] : normalized;
 
-        // state.items = append ? [...state.items, ...newItems] : newItems;
-
-        state.hasMore = newItems.length >= (state.limit || 4);
+        state.page = page;
+        if (typeof limit === "number") state.limit = limit;
+        state.hasMore = normalized.length >= (state.limit || 4);
       })
       .addCase(fetchCampers.rejected, (state, action) => {
         state.isLoading = false;

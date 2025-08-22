@@ -32,6 +32,23 @@ function LeftSidebar() {
     });
   };
   const handleApply = () => {
+    const params = {
+        location:location||undefined,
+        form:vehicleType||undefined,
+        //ekipmanlar
+        AC:selectedEquip.has("AC")||undefined,
+        kitchen:selectedEquip.has("kitchen")||undefined,
+        bathroom:selectedEquip.has("bathroom")||undefined,
+        TV:selectedEquip.has("TV")||undefined,
+        //Automatic 
+        transmission: selectedEquip.has("automatic") ?  "automatic" : undefined,
+    };
+    onApply?.(params);
+
+
+
+    
+
     //seçilen ekipmanları objeye çevirdim
     const equipmentFlags = {};
 
