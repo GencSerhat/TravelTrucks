@@ -119,7 +119,8 @@ function CamperDetails() {
   }, [camper]);
 
   // Filtrelerin görünmesi (katalogtan geldiyse)
-  const hasIncomingFilters = !!appliedFilters && Object.keys(appliedFilters).length > 0;
+  const hasIncomingFilters =
+    !!appliedFilters && Object.keys(appliedFilters).length > 0;
 
   // Form helpers
   function handleInputChange(e) {
@@ -160,7 +161,7 @@ function CamperDetails() {
     <div className={styles.CamperDetails}>
       {/* Üst Başlık Alanı */}
       <div className={styles.TitleAndReviewsAndPrice}>
-        <h1>{title}</h1>
+        <h2>{title}</h2>
 
         <div className={styles.ReviewsAndLocation}>
           {/* Puan + yorum sayısı */}
@@ -173,7 +174,11 @@ function CamperDetails() {
         </div>
 
         {/* Fiyat */}
-        {price != null ? <div className={styles.Price}>€{price}/day</div> : null}
+        {price != null ? (
+          <div className={styles.Price}>
+            <h2>€{price}/day </h2>
+          </div>
+        ) : null}
 
         {/* Katalogdan gelen filtreleri göster (geldiyse) */}
         {hasIncomingFilters && (
@@ -202,88 +207,94 @@ function CamperDetails() {
           <div className={styles.GalleryEmpty}>No images available</div>
         )}
       </div>
-
+      {/* Description */}
+      {camper?.description ? (
+        <>
+          <h2>Description</h2>
+          <p className={styles.Description}>{camper.description}</p>
+        </>
+      ) : null}
+      <div className={styles.BtnAndDetails}>
+<div className={styles.FeaturesAndReviewsBtn}>
+        <button
+          aria-pressed={activeTab === "features"}
+          onClick={() => setActiveTab("features")}
+        >
+          Features
+        </button>
+        <button
+          aria-pressed={activeTab === "reviews"}
+          onClick={() => setActiveTab("reviews")}
+        >
+          Reviews
+        </button>
+      </div>
       {/* Ana içerik: Sol içerik + Sağ aside */}
       <div className={styles.FeaturesReviewsAndContact}>
         {/* SOL: Sekmeler ve içerik */}
         <div className={styles.Features}>
-          {/* Description */}
-          {camper?.description ? (
-            <>
-              <h2>Description</h2>
-              <p className={styles.Description}>{camper.description}</p>
-            </>
-          ) : null}
-
           {/* Tabs */}
-          <div className={styles.FeaturesAndReviewsBtn}>
-            <button
-              aria-pressed={activeTab === "features"}
-              onClick={() => setActiveTab("features")}
-            >
-              Features
-            </button>
-            <button
-              aria-pressed={activeTab === "reviews"}
-              onClick={() => setActiveTab("reviews")}
-            >
-              Reviews
-            </button>
-          </div>
 
-          {/* Tab İçerikleri */}
-          {activeTab === "features" && (
-            <>
-              {/* Rozet/Özellikler */}
-              {featuresList?.length ? (
-                <div className={styles.FeaturesList}>
+          <div className={styles.FeaturesReviewsDiv}>
+            {/* Tab İçerikleri */}
+            {activeTab === "features" && (
+              <>
+                {/* Rozet/Özellikler */}
+                {featuresList?.length ? (
+                  <div className={styles.FeaturesList}>
+                    <ul>
+                      {featuresList.map((f, i) => (
+                        <li key={`${f}-${i}`}>{f}</li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <p>No features listed.</p>
+                )}
+
+                {/* Teknik Detaylar */}
+                {vehicleDetails?.length ? (
+                  <div className={styles.VehicleDetails}>
+                    <h3>Vehicle details</h3>
+                    <dl>
+                      {vehicleDetails.map(([k, v]) => (
+                        <div key={k} className={styles.DetailRow}>
+                          <dt>{k}</dt>
+                          <dd>{String(v)}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  </div>
+                ) : null}
+              </>
+            )}
+
+            {activeTab === "reviews" && (
+              <div className={styles.ReviewsList}>
+                {reviews.length ? (
                   <ul>
-                    {featuresList.map((f, i) => (
-                      <li key={`${f}-${i}`}>{f}</li>
+                    {reviews.map((r, i) => (
+                      <li key={i}>
+                        <div className={styles.ReviewHead}>
+                          <strong>{r.author || "Anonymous"}</strong>{" "}
+                          <span>
+                            •{" "}
+                            {typeof r.rating === "number"
+                              ? `⭐ ${r.rating}`
+                              : "⭐—"}
+                          </span>
+                          {r.date ? <span> • {r.date}</span> : null}
+                        </div>
+                        {r.text ? <p>{r.text}</p> : null}
+                      </li>
                     ))}
                   </ul>
-                </div>
-              ) : (
-                <p>No features listed.</p>
-              )}
-
-              {/* Teknik Detaylar */}
-              {vehicleDetails?.length ? (
-                <div className={styles.VehicleDetails}>
-                  <h3>Vehicle details</h3>
-                  <dl>
-                    {vehicleDetails.map(([k, v]) => (
-                      <div key={k} className={styles.DetailRow}>
-                        <dt>{k}</dt>
-                        <dd>{String(v)}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                </div>
-              ) : null}
-            </>
-          )}
-
-          {activeTab === "reviews" && (
-            <div className={styles.ReviewsList}>
-              {reviews.length ? (
-                <ul>
-                  {reviews.map((r, i) => (
-                    <li key={i}>
-                      <div className={styles.ReviewHead}>
-                        <strong>{r.author || "Anonymous"}</strong>{" "}
-                        <span>• {typeof r.rating === "number" ? `⭐ ${r.rating}` : "⭐—"}</span>
-                        {r.date ? <span> • {r.date}</span> : null}
-                      </div>
-                      {r.text ? <p>{r.text}</p> : null}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>Henüz yorum yok.</p>
-              )}
-            </div>
-          )}
+                ) : (
+                  <p>Henüz yorum yok.</p>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* SAĞ: Rezervasyon/İletişim Kartı */}
@@ -350,6 +361,8 @@ function CamperDetails() {
           </div>
         </aside>
       </div>
+      </div>
+      
     </div>
   );
 }
