@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./CamperCard.module.css";
 
 const formatPrice = (value) => `€${Number(value).toFixed(2)}`;
-function CamperCard({ camper }) {
+function CamperCard({ camper, appliedFilters }) {
   const [showAllFilters, setShowAllFilters] = useState(false);
-
+const navigate = useNavigate();
   const {
     id,
     name = "Unknown",
@@ -21,6 +22,18 @@ function CamperCard({ camper }) {
   const handleToggleFilters = () => {
     setShowAllFilters(!showAllFilters);
   };
+
+
+const goDetails = () => {
+    navigate(`/campers/${camper.id}`, {
+      state: {
+        camper,          // isim, fiyat, rating, görseller vb. anında gösterim için
+        appliedFilters,  // kullanıcı katalogta ne seçtiyse göstermek için
+      },
+    });
+  };
+
+
   return (
     <>
       <article className={styles.CamperCard}>
@@ -84,9 +97,7 @@ function CamperCard({ camper }) {
             <button
               type="button"
               className={styles.ShowMoreButton}
-              onClick={() =>
-                window.open(`/catalog/${id}`, "_blank", "noopener,noreferrer")
-              }
+              onClick={goDetails}
             >
               Show More
             </button>
