@@ -6,6 +6,34 @@ import styles from "./CamperDetails.module.css";
 // API base:
 const API_BASE = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
 
+function getFeatureIconSrc(label) {
+  const key = String(label).toLowerCase().trim();
+
+  // Sık karşılaşılan eşleştirmeler (gerekirse genişletirsin)
+  const map = {
+    ac: "ac",
+    "air conditioning": "ac",
+    bathroom: "bathroom",
+    kitchen: "kitchen",
+    tv: "tv",
+    radio: "radio",
+    refrigerator: "refrigerator",
+    microwave: "microwave",
+    gas: "gas",
+    water: "water",
+    diesel: "diesel",
+    petrol: "petrol",
+    automatic: "automatic",
+    manual: "manual",
+    seats: "seats",
+    beds: "beds",
+    transmission: "transmission",
+    engine: "engine",
+  };
+  const name = map[key] || key.replace(/\s+/g, "-"); // örn: "solar panel" -> "solar-panel"
+  return `/icons/${name}.png`;
+}
+
 function CamperDetails() {
   const { id } = useParams();
   const location = useLocation();
@@ -72,7 +100,12 @@ function CamperDetails() {
   // Görseller: gallery (dizi) varsayımı
   const images = useMemo(() => {
     const g = camper?.gallery || camper?.images || [];
-    return Array.isArray(g) ? g.filter(Boolean) : [];
+    if (!Array.isArray(g)) return [];
+    return g
+      .map((item) =>
+        typeof item === "string" ? item : item?.original || item?.thumb || ""
+      )
+      .filter(Boolean);
   }, [camper]);
 
   // Özellikler/teknikler için esnek okuma
@@ -199,7 +232,12 @@ function CamperDetails() {
           <ul className={styles.GalleryList}>
             {images.slice(0, 6).map((src, idx) => (
               <li key={idx}>
-                <img src={src} alt={`${title} image ${idx + 1}`} />
+                <img
+                  src={src}
+                  alt={`${title} image ${idx + 1}`}
+                  loading="lazy"
+                  onError={(e) => (e.currentTarget.src = "/Pic.png")}
+                />
               </li>
             ))}
           </ul>
@@ -215,154 +253,165 @@ function CamperDetails() {
         </>
       ) : null}
       <div className={styles.BtnAndDetails}>
-<div className={styles.FeaturesAndReviewsBtn}>
-        <button
-          aria-pressed={activeTab === "features"}
-          onClick={() => setActiveTab("features")}
-        >
-          Features
-        </button>
-        <button
-          aria-pressed={activeTab === "reviews"}
-          onClick={() => setActiveTab("reviews")}
-        >
-          Reviews
-        </button>
-      </div>
-      {/* Ana içerik: Sol içerik + Sağ aside */}
-      <div className={styles.FeaturesReviewsAndContact}>
-        {/* SOL: Sekmeler ve içerik */}
-        <div className={styles.Features}>
-          {/* Tabs */}
+        <div className={styles.FeaturesAndReviewsBtn}>
+          <button
+            aria-pressed={activeTab === "features"}
+            onClick={() => setActiveTab("features")}
+          >
+            Features
+          </button>
+          <button
+            aria-pressed={activeTab === "reviews"}
+            onClick={() => setActiveTab("reviews")}
+          >
+            Reviews
+          </button>
+        </div>
+        {/* Ana içerik: Sol içerik + Sağ aside */}
+        <div className={styles.FeaturesReviewsAndContact}>
+          {/* SOL: Sekmeler ve içerik */}
+          <div className={styles.Features}>
+            {/* Tabs */}
 
-          <div className={styles.FeaturesReviewsDiv}>
-            {/* Tab İçerikleri */}
-            {activeTab === "features" && (
-              <>
-                {/* Rozet/Özellikler */}
-                {featuresList?.length ? (
-                  <div className={styles.FeaturesList}>
+            <div className={styles.FeaturesReviewsDiv}>
+              {/* Tab İçerikleri */}
+              {activeTab === "features" && (
+                <>
+                  {/* Rozet/Özellikler */}
+                  {featuresList?.length ? (
+                    <div className={styles.FeaturesList}>
+                      <ul>
+                        {featuresList.map((f, i) => (
+                          <li key={`${f}-${i}`} className={styles.FeaturesItem}>
+                            {" "}
+                            <img
+                              src={getFeatureIconSrc(f)}
+                              alt="" 
+                              aria-hidden="true" // ekran okuyucuda gizle
+                              onError={(e) =>
+                                (e.currentTarget.src = "/icons/default.png")
+                              }
+                              className={styles.FeatureIcon}
+                            />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <p>No features listed.</p>
+                  )}
+
+                  {/* Teknik Detaylar */}
+                  {vehicleDetails?.length ? (
+                    <div className={styles.VehicleDetails}>
+                      <h3>Vehicle details</h3>
+                      <dl>
+                        {vehicleDetails.map(([k, v]) => (
+                          <div key={k} className={styles.DetailRow}>
+                            <dt>{k}</dt>
+                            <dd>{String(v)}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  ) : null}
+                </>
+              )}
+
+              {activeTab === "reviews" && (
+                <div className={styles.ReviewsList}>
+                  {reviews.length ? (
                     <ul>
-                      {featuresList.map((f, i) => (
-                        <li key={`${f}-${i}`}>{f}</li>
+                      {reviews.map((r, i) => (
+                        <li key={i}>
+                          <div className={styles.ReviewHead}>
+                            <strong>{r.author || "Anonymous"}</strong>{" "}
+                            <span>
+                              •{" "}
+                              {typeof r.rating === "number"
+                                ? `⭐ ${r.rating}`
+                                : "⭐—"}
+                            </span>
+                            {r.date ? <span> • {r.date}</span> : null}
+                          </div>
+                          {r.text ? <p>{r.text}</p> : null}
+                        </li>
                       ))}
                     </ul>
-                  </div>
-                ) : (
-                  <p>No features listed.</p>
-                )}
-
-                {/* Teknik Detaylar */}
-                {vehicleDetails?.length ? (
-                  <div className={styles.VehicleDetails}>
-                    <h3>Vehicle details</h3>
-                    <dl>
-                      {vehicleDetails.map(([k, v]) => (
-                        <div key={k} className={styles.DetailRow}>
-                          <dt>{k}</dt>
-                          <dd>{String(v)}</dd>
-                        </div>
-                      ))}
-                    </dl>
-                  </div>
-                ) : null}
-              </>
-            )}
-
-            {activeTab === "reviews" && (
-              <div className={styles.ReviewsList}>
-                {reviews.length ? (
-                  <ul>
-                    {reviews.map((r, i) => (
-                      <li key={i}>
-                        <div className={styles.ReviewHead}>
-                          <strong>{r.author || "Anonymous"}</strong>{" "}
-                          <span>
-                            •{" "}
-                            {typeof r.rating === "number"
-                              ? `⭐ ${r.rating}`
-                              : "⭐—"}
-                          </span>
-                          {r.date ? <span> • {r.date}</span> : null}
-                        </div>
-                        {r.text ? <p>{r.text}</p> : null}
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Henüz yorum yok.</p>
-                )}
-              </div>
-            )}
+                  ) : (
+                    <p>Henüz yorum yok.</p>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* SAĞ: Rezervasyon/İletişim Kartı */}
+          <aside className={styles.Contact}>
+            <div className={styles.ContactCard}>
+              <h3>Book your campervan now</h3>
+              <p>Stay connected! We are always ready to help you.</p>
+
+              <form onSubmit={handleSubmit} noValidate>
+                <div className={styles.FormGroup}>
+                  <label htmlFor="name">Name*</label>
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Your name"
+                    value={form.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className={styles.FormGroup}>
+                  <label htmlFor="email">Email*</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    value={form.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className={styles.FormGroup}>
+                  <label htmlFor="bookingDate">Booking date*</label>
+                  <input
+                    id="bookingDate"
+                    name="bookingDate"
+                    type="date"
+                    value={form.bookingDate}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className={styles.FormGroup}>
+                  <label htmlFor="comment">Comment</label>
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    placeholder="Your message"
+                    rows={4}
+                    value={form.comment}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
+                <button type="submit" className={styles.SubmitBtn}>
+                  Send
+                </button>
+              </form>
+            </div>
+          </aside>
         </div>
-
-        {/* SAĞ: Rezervasyon/İletişim Kartı */}
-        <aside className={styles.Contact}>
-          <div className={styles.ContactCard}>
-            <h3>Book your campervan now</h3>
-            <p>Stay connected! We are always ready to help you.</p>
-
-            <form onSubmit={handleSubmit} noValidate>
-              <div className={styles.FormGroup}>
-                <label htmlFor="name">Name*</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  placeholder="Your name"
-                  value={form.name}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.FormGroup}>
-                <label htmlFor="email">Email*</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="you@example.com"
-                  value={form.email}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.FormGroup}>
-                <label htmlFor="bookingDate">Booking date*</label>
-                <input
-                  id="bookingDate"
-                  name="bookingDate"
-                  type="date"
-                  value={form.bookingDate}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.FormGroup}>
-                <label htmlFor="comment">Comment</label>
-                <textarea
-                  id="comment"
-                  name="comment"
-                  placeholder="Your message"
-                  rows={4}
-                  value={form.comment}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <button type="submit" className={styles.SubmitBtn}>
-                Send
-              </button>
-            </form>
-          </div>
-        </aside>
       </div>
-      </div>
-      
     </div>
   );
 }

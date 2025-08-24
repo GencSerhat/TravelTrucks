@@ -29,8 +29,13 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+  padding: 0;
+}
+.GalleryList img {
   width: 292px;
   height: 312px;
+  gap: 10px;
+  object-fit: cover;
   border-radius: 10px;
 }
 .Description {
@@ -49,15 +54,26 @@
   flex-direction: row;
   gap: 24px;
 }
+.FeaturesAndReviewsBtn button {
+  background: none;
+  border: none;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 24px;
+    color: #101828;
+      cursor: pointer;
 
+}
 .FeaturesList ul {
   display: flex;
   flex-direction: row;
   gap: 30px;
   list-style-type: none;
-  background-color: #475467;
   width: 527px;
   height: 104px;
+  flex-wrap: wrap;
+
 }
 .DetailRow {
   display: flex;
@@ -66,22 +82,23 @@
   justify-content: space-between;
 }
 .FeaturesReviewsAndContact {
-    background-color: red;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
   width: 1312px;
-
- 
 }
 .FeaturesReviewsDiv {
   width: 631px;
   height: 588px;
-  background-color: violet;
+  background-color:#F7F7F7;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  border-radius: 10px;
+  gap: 100px;
+
 }
 .VehicleDetails {
   background-color: yellow;
@@ -94,10 +111,22 @@
   width: 641px;
   height: 588px;
 }
-.BtnAndDetails{
-    background-color: bisque;
-   
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.BtnAndDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
+.FeaturesItem{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  background-color: #f2f4f7;
+  border-radius: 100px;
+  padding: 10px;
+ 
+}
+
+
