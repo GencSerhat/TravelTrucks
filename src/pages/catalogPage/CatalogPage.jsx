@@ -9,6 +9,7 @@ import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import styles from "./CatalogPage.module.css";
 
+
 function CatalogPage() {
   const dispatch = useDispatch();
   const { items, isLoading, error, hasMore } = useSelector((s) => s.campers);

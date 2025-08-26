@@ -1,17 +1,26 @@
-.CatalogPage{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    
+.CatalogPage {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
-.LoadMoreBtn{
-    background-color: red;
-    margin-top: 10px;
-    align-items: center;
+.LoadMoreBtn {
+  width: 145px;
+  height: 56px;
+  border-radius: 200px;
+  gap: 10px;
+  background-color: #dadde1;
+  margin-top: 10px;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: -0.5%;
+  color: #101828;
 }
-.RightSide{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+.RightSide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }

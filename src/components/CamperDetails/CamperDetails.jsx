@@ -6,6 +6,20 @@ import styles from "./CamperDetails.module.css";
 // API base:
 const API_BASE = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
 
+const formatPrice = (value) => `€${Number(value).toFixed(2)}`;
+function renderStars(n, className) {
+  const count = Math.max(0, Math.min(5, Math.floor(n || 0)));
+  return Array.from({ length: count }).map((_, i) => (
+    <img
+      key={i}
+      src="/Rating.png" // elindeki yıldız görseli
+      alt=""
+      aria-hidden="true"
+      className={className}
+    />
+  ));
+}
+
 function getFeatureIconSrc(label) {
   const key = String(label).toLowerCase().trim();
 
@@ -146,10 +160,19 @@ function CamperDetails() {
 
   // Yorumlar
   const reviews = useMemo(() => {
-    // Ör: camper.reviews = [{author, rating, date, text}, ...]
-    if (Array.isArray(camper?.reviews)) return camper.reviews;
-    // Yoksa boş
-    return [];
+    const arr = Array.isArray(camper?.reviews) ? camper.reviews : [];
+    return arr.map((r, idx) => ({
+      id: idx,
+      author: r.reviewer_name || r.author || "Anonymous",
+      rating:
+        typeof r.reviewer_rating === "number"
+          ? r.reviewer_rating
+          : typeof r.rating === "number"
+          ? r.rating
+          : 0,
+      text: r.comment || r.text || "",
+      date: r.date || null,
+    }));
   }, [camper]);
 
   // Filtrelerin görünmesi (katalogtan geldiyse)
@@ -200,17 +223,27 @@ function CamperDetails() {
         <div className={styles.ReviewsAndLocation}>
           {/* Puan + yorum sayısı */}
           <span>
-            {typeof rating === "number" ? `⭐ ${rating}` : "⭐—"}
+            <img
+              src="/Rating.png"
+              className={styles.RatingIcon}
+              alt="Logo"
+            ></img>
+            {typeof rating === "number" ? ` ${rating}` : ""}
             {Array.isArray(reviews) ? ` (${reviews.length} reviews)` : ""}
           </span>
           {/* Konum */}
-          {locationText ? <span> • 📍 {locationText}</span> : null}
+          <img
+            src="/LocationVector.png"
+            className={styles.LogoInput}
+            alt="Logo"
+          ></img>
+          {locationText ? <span> {locationText}</span> : null}
         </div>
 
         {/* Fiyat */}
         {price != null ? (
           <div className={styles.Price}>
-            <h2>€{price}/day </h2>
+            <h2>{formatPrice(price)}/day </h2>
           </div>
         ) : null}
 
@@ -249,8 +282,7 @@ function CamperDetails() {
       {/* Description */}
       {camper?.description ? (
         <>
-          <h2>Description</h2>
-          <p className={styles.Description}>{camper.description}</p>
+          <p className={styles.DescriptionP}>{camper.description}</p>
         </>
       ) : null}
       <div className={styles.BtnAndDetails}>
@@ -324,17 +356,19 @@ function CamperDetails() {
                 <div className={styles.ReviewsList}>
                   {reviews.length ? (
                     <ul>
-                      {reviews.map((r, i) => (
-                        <li key={i}>
+                      {reviews.map((r) => (
+                        <li key={r.id}>
                           <div className={styles.ReviewHead}>
-                            <strong>{r.author || "Anonymous"}</strong>{" "}
-                            <span>
-                              •{" "}
-                              {typeof r.rating === "number"
-                                ? `⭐ ${r.rating}`
-                                : "⭐—"}
+                            <strong>{r.author}</strong>
+                            <span className={styles.ReviewStars}>
+                              {renderStars(r.rating, styles.StarIcon)}
                             </span>
-                            {r.date ? <span> • {r.date}</span> : null}
+                            {r.date ? (
+                              <span className={styles.ReviewDate}>
+                                {" "}
+                                • {r.date}
+                              </span>
+                            ) : null}
                           </div>
                           {r.text ? <p>{r.text}</p> : null}
                         </li>

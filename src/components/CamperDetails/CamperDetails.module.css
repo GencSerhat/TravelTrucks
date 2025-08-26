@@ -4,14 +4,20 @@
   font-size: 24px;
   line-height: 32px;
   color: #101828;
+  margin-left: 75px;
 }
 .ReviewsAndLocation {
+  display: flex;
+  flex-direction: row;
   font-family: "Inter", sans-serif;
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
   text-decoration: underline;
   color: #101828;
+  margin-left: 75px;
+  gap: 20px;
+  
 }
 .Price h2 {
   font-family: "Inter", sans-serif;
@@ -24,12 +30,14 @@
   width: 1312px;
   height: 312px;
   justify-content: space-between;
+  margin-left: 75px;
 }
 .GalleryList {
   display: flex;
   flex-direction: row;
   gap: 10px;
   padding: 0;
+  list-style-type: none;
 }
 .GalleryList img {
   width: 292px;
@@ -38,7 +46,8 @@
   object-fit: cover;
   border-radius: 10px;
 }
-.Description {
+
+.DescriptionP {
   font-family: "Inter", sans-serif;
   width: 1312px;
   height: 48px;
@@ -46,6 +55,7 @@
   font-size: 16px;
   line-height: 24px;
   color: #475467;
+  margin-left: 75px;
 }
 .FeaturesAndReviewsBtn {
   width: 1312px;
@@ -53,6 +63,7 @@
   display: flex;
   flex-direction: row;
   gap: 24px;
+  margin-left: 75px;
 }
 .FeaturesAndReviewsBtn button {
   background: none;
@@ -90,6 +101,7 @@
   justify-content: space-between;
   align-items: flex-start;
   width: 1312px;
+  margin-left: 75px;
 }
 .FeaturesReviewsDiv {
   width: 631px;
@@ -168,7 +180,6 @@
   color: #6c717b;
   align-self: flex-start;
   padding-left: 50px;
-
 }
 
 .FormGroup input {
@@ -182,7 +193,7 @@
   background-color: #f7f7f7;
   color: #6c717b;
   margin: 10px;
-    border-radius: 12px;
+  border-radius: 12px;
 }
 .FormGroup textarea {
   font-family: "Inter", sans-serif;
@@ -195,7 +206,7 @@
   background-color: #f7f7f7;
   color: #6c717b;
   margin: 10px;
-    border-radius: 12px;
+  border-radius: 12px;
 }
 .SubmitBtn {
   font-family: "Inter", sans-serif;
@@ -211,4 +222,12 @@
   color: white;
   border: none;
   margin-left: 30%;
+}
+.ReviewsList p{
+   font-family: "Inter", sans-serif;
+   font-weight: 400px;
+   font-size: 16px;
+   line-height: 24px;
+   color: #475467;
+   padding: 20px;
 }
