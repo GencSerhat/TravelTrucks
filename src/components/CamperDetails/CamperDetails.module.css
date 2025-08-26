@@ -78,6 +78,11 @@
   flex-direction: row;
   gap: 20px;
   justify-content: space-between;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #101828;
 }
 .FeaturesReviewsAndContact {
   display: flex;
@@ -113,11 +118,6 @@
   color: #101828;
 }
 
-.ContactCard {
-  background-color: blue;
-  width: 641px;
-  height: 588px;
-}
 .BtnAndDetails {
   display: flex;
   flex-direction: column;
@@ -133,4 +133,82 @@
   background-color: #f2f4f7;
   border-radius: 100px;
   padding: 10px;
+}
+.Contact {
+  width: 641px;
+  height: 588px;
+  border-radius: 10px;
+  border: 1px;
+  border-style: solid;
+  gap: 24px;
+  border-color: #dadde1;
+}
+.ContactCard {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  justify-content: center;
+}
+.ContactCard h3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #101828;
+  align-self: flex-start;
+  padding-left: 50px;
+}
+.ContactCard p {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #6c717b;
+  align-self: flex-start;
+  padding-left: 50px;
+
+}
+
+.FormGroup input {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border-style: none;
+  width: 527px;
+  height: 60px;
+  background-color: #f7f7f7;
+  color: #6c717b;
+  margin: 10px;
+    border-radius: 12px;
+}
+.FormGroup textarea {
+  font-family: "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border-style: none;
+  width: 527px;
+  height: 60px;
+  background-color: #f7f7f7;
+  color: #6c717b;
+  margin: 10px;
+    border-radius: 12px;
+}
+.SubmitBtn {
+  font-family: "Inter", sans-serif;
+  width: 166px;
+  height: 56px;
+  border-radius: 200px;
+  gap: 10px;
+  background-color: #e44848;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0.5%;
+  color: white;
+  border: none;
+  margin-left: 30%;
 }

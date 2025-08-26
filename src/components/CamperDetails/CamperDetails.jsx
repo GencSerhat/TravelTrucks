@@ -128,13 +128,14 @@ function CamperDetails() {
   const vehicleDetails = useMemo(() => {
     // Ör: camper.details = { form, length, width, height, tank, consumption }
     const d = camper?.details || camper?.specs || {};
+    const getVal = (key) => d[key] ?? camper?.[key];
     const pairs = [
-      ["Form", d.form ?? camper?.vehicleType ?? camper?.type],
-      ["Length", d.length],
-      ["Width", d.width],
-      ["Height", d.height],
-      ["Tank", d.tank],
-      ["Consumption", d.consumption],
+      ["Form", getVal("form") ?? camper?.vehicleType ?? camper?.type],
+      ["Length", getVal("length")],
+      ["Width", getVal("width")],
+      ["Height", getVal("height")],
+      ["Tank", getVal("tank")],
+      ["Consumption", getVal("consumption")],
       ["Seats", camper?.seats],
       ["Beds", camper?.beds],
       ["Transmission", camper?.transmission],
@@ -286,7 +287,7 @@ function CamperDetails() {
                             {" "}
                             <img
                               src={getFeatureIconSrc(f)}
-                              alt="" 
+                              alt=""
                               aria-hidden="true" // ekran okuyucuda gizle
                               onError={(e) =>
                                 (e.currentTarget.src = "/icons/default.png")
@@ -355,12 +356,12 @@ function CamperDetails() {
 
               <form onSubmit={handleSubmit} noValidate>
                 <div className={styles.FormGroup}>
-                  <label htmlFor="name">Name*</label>
+                  {/* <label htmlFor="name">Name*</label> */}
                   <input
                     id="name"
                     name="name"
                     type="text"
-                    placeholder="Your name"
+                    placeholder="Name*"
                     value={form.name}
                     onChange={handleInputChange}
                     required
@@ -368,12 +369,12 @@ function CamperDetails() {
                 </div>
 
                 <div className={styles.FormGroup}>
-                  <label htmlFor="email">Email*</label>
+                  {/* <label htmlFor="email">Email*</label> */}
                   <input
                     id="email"
                     name="email"
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder="Email*"
                     value={form.email}
                     onChange={handleInputChange}
                     required
@@ -381,7 +382,7 @@ function CamperDetails() {
                 </div>
 
                 <div className={styles.FormGroup}>
-                  <label htmlFor="bookingDate">Booking date*</label>
+                  {/* <label htmlFor="bookingDate">Booking date*</label> */}
                   <input
                     id="bookingDate"
                     name="bookingDate"
@@ -393,11 +394,11 @@ function CamperDetails() {
                 </div>
 
                 <div className={styles.FormGroup}>
-                  <label htmlFor="comment">Comment</label>
+                  {/* <label htmlFor="comment">Comment</label> */}
                   <textarea
                     id="comment"
                     name="comment"
-                    placeholder="Your message"
+                    placeholder="Comment*"
                     rows={4}
                     value={form.comment}
                     onChange={handleInputChange}

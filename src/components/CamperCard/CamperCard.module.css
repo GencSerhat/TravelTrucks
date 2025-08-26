@@ -30,13 +30,11 @@
 .CardFeatures {
   width: 524px;
   height: 104px;
- 
 }
 .ImageWrap img {
   width: 292px;
   height: 320px;
   border-radius: 10px;
- 
 }
 .CamperCardTitle h2 {
   font-family: "Inter", sans-serif;
@@ -71,6 +69,7 @@
   letter-spacing: 0.5%;
   color: white;
   margin-top: 50px;
+  border: none;
 }
 .Features {
   display: flex;
@@ -78,7 +77,6 @@
   flex-wrap: wrap;
   gap: 20px;
   padding-left: inherit;
-
 }
 .FeaturesList {
   width: 143px;
@@ -90,12 +88,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
 }
 
-.CardDescription p{
-    width: 500px;
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
+.CardDescription p {
+  width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
