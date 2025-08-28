@@ -21,7 +21,7 @@
 }
 .LocationInput {
   font-family: "Inter", sans-serif;
-  width: 360px;
+  max-width: 360px;
   height: 56px;
   border-radius: 12px;
   color: #f7f7f7;
