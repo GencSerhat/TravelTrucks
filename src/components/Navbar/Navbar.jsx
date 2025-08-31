@@ -5,7 +5,7 @@ function Navbar() {
       <nav className={styles.Navbar}>
         <div className={styles.logoDiv}>
           <img
-            src="/logo.png"
+            src={`${import.meta.env.BASE_URL}logo.png`}
             alt="TravelTrucks"
             className={styles.LogoNavbar}
           />
