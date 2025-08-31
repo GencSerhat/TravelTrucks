@@ -231,3 +231,39 @@
    color: #475467;
    padding: 20px;
 }
+.ReviewsList li{
+ list-style-type: none;
+}
+.ReviewHead{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.ReviewContain{
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+
+}
+.NameFirstDiv{
+  background-color:#f2f4f7;
+  border-radius: 60px;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  
+ 
+}
+.NameFirstChar{
+font-family: "Inter", sans-serif;
+font-weight: 600;
+font-size: 24px;
+line-height: 32px;
+color: #e44848;
+margin-top: 20%;
+
+
+
+}

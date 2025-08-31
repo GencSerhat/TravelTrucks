@@ -358,17 +358,22 @@ function CamperDetails() {
                     <ul>
                       {reviews.map((r) => (
                         <li key={r.id}>
-                          <div className={styles.ReviewHead}>
-                            <strong>{r.author}</strong>
-                            <span className={styles.ReviewStars}>
-                              {renderStars(r.rating, styles.StarIcon)}
-                            </span>
-                            {r.date ? (
-                              <span className={styles.ReviewDate}>
-                                {" "}
-                                • {r.date}
+                          <div className={styles.ReviewContain}>
+                            <div className={styles.NameFirstDiv}>
+                              <h3 className={styles.NameFirstChar}>{r.author.charAt(0)}</h3>
+                            </div>
+                            <div className={styles.ReviewHead}>
+                              <strong>{r.author}</strong>
+                              <span className={styles.ReviewStars}>
+                                {renderStars(r.rating, styles.StarIcon)}
                               </span>
-                            ) : null}
+                              {r.date ? (
+                                <span className={styles.ReviewDate}>
+                                  {" "}
+                                  • {r.date}
+                                </span>
+                              ) : null}
+                            </div>
                           </div>
                           {r.text ? <p>{r.text}</p> : null}
                         </li>

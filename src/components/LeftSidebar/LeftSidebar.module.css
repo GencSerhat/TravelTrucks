@@ -16,23 +16,31 @@
   color: #6c717b;
 }
 .logoAndInput {
-  position: relative;
-  display: inline-block;
+position: relative;
+  display: block;             
+  width: 100%; 
 }
 .LocationInput {
-  font-family: "Inter", sans-serif;
-  max-width: 360px;
+font-family: "Inter", sans-serif;
+  width: 100%;              
+  max-width: 100%;            
   height: 56px;
   border-radius: 12px;
-  color: #f7f7f7;
-  padding: 40px;
-  height: 40px;
+  background: #f7f7f7;        
+  color: #101828;            
+  padding: 0 16px 0 44px;     
   font-size: 16px;
+  line-height: 24px;
   box-sizing: border-box;
+  min-width: 0;             
+  white-space: nowrap;       
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: 1px solid #dadde1;
 }
 .LogoInput {
-  position: absolute;
-  left: 5%;
+   position: absolute;
+  left: 12px;
   top: 50%;
   transform: translateY(-50%);
   width: 20px;
@@ -55,16 +63,27 @@
   color: #101828;
 }
 .EquipmentAndTypeList {
-  width: 360px;
-  height: 200px;
+ width: 100%;                /* sabit 360px yerine akışkan */
+  max-width: 360px;           /* istersen üst sınır */
   gap: 10px;
 }
-
+.hr{
+   width: 100%;                /* sabit 360px yerine akışkan */
+  border: 1px solid #dadde1;
+  margin-top: 30px;
+}
 .EquipmentList {
   display: flex;
   flex-direction: row;
   gap: 10px;
   flex-wrap: wrap;
+}
+.EquipmentList,
+.TypeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-width: 0;
 }
 .chip {
   width: 112px;
@@ -114,4 +133,9 @@
     color: #dadde1;
     border-style: solid;
     margin-top: 30px;
+}
+@media (max-width: 768px) {
+  .LeftSidebar {
+    width: 100%;
+  }
 }
