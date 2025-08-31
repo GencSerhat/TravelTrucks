@@ -14,27 +14,39 @@
   text-align: center;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 8px;
 }
 .PriceAndLike {
   display: flex;
   align-items: center;
   gap: 10px;
+  position: relative;
+  z-index: 2;
 }
 .RatingCountsAndLocation {
   display: flex;
   gap: 10px;
   align-items: center;
   flex-direction: row;
-  margin-top: -38px;
+  margin-top: 8px;
 }
 .CardFeatures {
   width: 524px;
   height: 104px;
 }
-.ImageWrap img {
+.ImageWrap {
   width: 292px;
   height: 320px;
   border-radius: 10px;
+  overflow: hidden;
+  flex: 0 0 292px;
+}
+.ImageWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 .CamperCardTitle h2 {
   font-family: "Inter", sans-serif;
@@ -51,10 +63,29 @@
   color: #101828;
 }
 .LikeBtn {
+  position: relative;
+  z-index: 3;
   background: none;
   border: none;
   width: 26px;
   height: 24px;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+}
+.LikeBtn img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.Liked img {
+  filter: invert(33%) sepia(98%) saturate(1500%) hue-rotate(330deg)
+    brightness(95%) contrast(95%);
+}
+.HeartIcon {
+  width: 26px;
+  height: 24px;
+  display: block;
 }
 .ShowMoreButton {
   font-family: "Inter", sans-serif;
@@ -68,7 +99,7 @@
   line-height: 24px;
   letter-spacing: 0.5%;
   color: white;
-  margin-top: 50px;
+  margin-top: 40px;
   border: none;
 }
 .Features {

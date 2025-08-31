@@ -1,7 +1,12 @@
 import Navbar from "../Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
 import styles from "./Home.module.css";
 
 function Home() {
+const navigate = useNavigate();
+const handleViewClick = () => {
+  navigate("/catalog");
+}
   return (
     <>
       <Navbar />
@@ -12,7 +17,7 @@ function Home() {
             You can find everything you want in our catalog
           </h2>
 
-          <button className={styles.ViewButton}>View Now</button>
+          <button className={styles.ViewButton} type="button" onClick={handleViewClick}>View Now</button>
         </div>
       </section>
     </>
