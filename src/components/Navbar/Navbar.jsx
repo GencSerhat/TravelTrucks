@@ -1,14 +1,11 @@
 import styles from "./Navbar.module.css";
+import logo from "../../assets/logo.png";
 function Navbar() {
   return (
     <>
       <nav className={styles.Navbar}>
         <div className={styles.logoDiv}>
-          <img
-            src={`/logo.png`}
-            alt="TravelTrucks"
-            className={styles.LogoNavbar}
-          />
+          <img src={logo} alt="TravelTrucks" className={styles.LogoNavbar} />
         </div>
         <div className={styles.NavbarCenter}>
           <ul className={styles.NavbarList}>
